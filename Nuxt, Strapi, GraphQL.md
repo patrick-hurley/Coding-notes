@@ -1,9 +1,3 @@
----
-title: 'Nuxt, Strapi, GraphQL'
-created: '2021-03-29T11:41:38.986Z'
-modified: '2021-03-29T12:04:24.629Z'
----
-
 Nuxt, Strapi, GraphQL
 ====
 
@@ -87,6 +81,50 @@ cd frontend
 npm install @nuxtjs/apollo graphql graphql-tag
 ```
 
-Update the `nuxt.config.js` file:
+### 1. Update the `nuxt.config.js` file:
 
+```javascript
+modules: [
+    '@nuxtjs/apollo'
+],
+
+apollo: {
+    clientConfigs: {
+        default: {
+            httpEndpoint: process.env.BACKEND_URL || "http://localhost:1337/graphgl"
+        }
+    }
+}
 ```
+
+### 2. Create 'queries.js`
+
+Add a new directory called `graphql` inside `frontend`, with a file called `queries.js`.
+
+
+
+
+```javascript
+import gql from 'graphql-tag';
+
+export const allArticlesQuery = gql`
+// GraphQL query for all articles
+query {
+	articles {
+		title
+		date
+	}
+}
+`
+
+export const singleArticleQuery = gql`
+// GraphQL query for single article
+query {
+	article(id:1){
+		title
+		date
+	}
+}
+`
+```
+
