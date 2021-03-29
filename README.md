@@ -1,2 +1,2 @@
 # Coding-notes
-Personal coding notes, useful as a point of reference
+Personal coding notes, used as a point of reference.
