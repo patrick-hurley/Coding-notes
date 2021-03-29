@@ -1,3 +1,9 @@
+---
+title: 'Nuxt, Strapi, GraphQL'
+created: '2021-03-29T11:41:38.986Z'
+modified: '2021-03-29T12:04:24.629Z'
+---
+
 Nuxt, Strapi, GraphQL
 ====
 
