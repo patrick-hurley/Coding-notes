@@ -149,7 +149,7 @@ apollo: {
 ---
 ## Creating dynamic pages
 
- `index.vue` can now be updated to have a `v-for` list to loop though all for the content received from the Articles `graphQL` call.
+ `index.vue` can now be updated to have a `v-for` list to loop though all for the content received from the **Articles** `graphQL` call.
 
  ```javascript
 <div
@@ -163,4 +163,57 @@ apollo: {
     </NuxtLink>
 </div>
  ```
+
+With Nuxt.js, you don't need to maintain a `route.js` file, and instead just create a vue file for each route in the `pages` folder. `route.js` is then dynamically generated during the build process.
+
+For dynamic content, start the filename with an underscore such as `_myslug.vue`, and in this case I'm using `_id.vue`.
+
+### Make the GraphQL call dynamic
+
+Our `graphql` call for a single article is currently harcoded to **'id = 1'** and instead we want this to be dependent on the url paramater of `id`.
+
+#### 1. Update `queries.js`
+
+```javascript
+export const singleArticleQuery = gql`
+    query singleArticleQuery($id: ID!) {
+        article(id: $id) {
+            id
+            title
+            date
+            body
+            description
+            slug
+        }
+    }
+`
+```
+
+#### 2. Create `_id.vue`
+```javascript
+import { singleArticleQuery } from '@/graphql/queries'
+export default {
+    data() {
+        return {
+            // this caused issues if set to null,
+            // and would only work on page reload
+            article: [],
+        }
+    },
+    apollo: {
+        article: {
+            prefetch: true,
+            query: singleArticleQuery,
+            variables() {
+                return {
+                    // this is the id from the url
+                    id: this.$route.query.id,
+                }
+            },
+        },
+    },
+}
+```
+
+
 
