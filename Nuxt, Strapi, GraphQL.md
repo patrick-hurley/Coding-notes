@@ -215,5 +215,18 @@ export default {
 }
 ```
 
+## Static site generation
+
+For the site to be statically generated using `Nuxt` we need to up `nuxt.config.js` with `target:static`.
+
+The problem with the code above is that `nuxt generate` will return `null` for the `$route` object, and  will therefore throw an error when trying to generate the articles.
+
+There are two options;
+
+* Exclude the article pages using `generate.exclude` in the config file, and setting `generate.fallback` to true. This will exclude the articles from being statically generated, and fallback to an SPA when on the article pages, calling the `graphql` endpoint on each page request.
+
+* Refactor the code so that instead of a query string, we use a `param` for the article id, making the path `my-article-title/[article-id]`. This method will statically generate each of the article pages.
+
+
 
 
