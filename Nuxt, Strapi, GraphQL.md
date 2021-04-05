@@ -311,7 +311,7 @@ export default {
 3. Choose the 'Continuous deployment' option for Github.
 4. The build command is `npm run generate` as we're using `target:static`
 
-![netlify build settings](images/netlify-build-settings.png)
+<img src="images/netlify-build-settings.png" alt="Netlify build settings" width="500">
 
 5. Under **Advanced build settings** we need to set the URL of the `graphql` API endpoint, which will be explained in the next section.
 
