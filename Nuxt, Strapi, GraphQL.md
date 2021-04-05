@@ -1,9 +1,9 @@
 # Nuxt, Strapi, GraphQL
 
-> **Versions**
-> Nuxt: 2.15.3
-> Nuxtjs/apollo: 4.0.1-rc.5
-> Graphql: 15.5.0
+> **Versions** <br>
+> Nuxt: 2.15.3 <br>
+> Nuxtjs/apollo: 4.0.1-rc.5 <br>
+> Graphql: 15.5.0 <br>
 > Strapi: 3.5.4
 
 ## Setup
