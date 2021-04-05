@@ -151,7 +151,7 @@ apollo: {
 
  `index.vue` can now be updated to have a `v-for` list to loop though all for the content received from the **Articles** `graphQL` call.
 
- ```javascript
+ ```html
 <div
     v-for="article in articles"
     :key="article.id"
@@ -236,7 +236,7 @@ generate: {
 
 * Refactor the code so that instead of a query string, we use a `param` for the article id, making the path `my-article-title/[article-id]`. This method will statically generate each of the article pages.
 
-```javascript
+```html
 // index.vue
 <NuxtLink
     :to="{
@@ -262,7 +262,7 @@ apollo: {
 ## Almost!
 **Although the theory is correct, unfortunately option 2 this doesn't appear to work with apollo.**
 
-When testing on Netlify, the `graphql` api will still be called on every page load of article, even though the articles have been statically generated. As soon as you turn off the Strapi server, the pages won't work.
+When testing on Netlify, the `graphql` api will still be called on every page load of article, even though the articles have been statically generated. As soon as you turn off the Strapi server, the page content won't load.
 
 To get round this, it appears that using `asyncData` needs to be used instead of the apollo method.
 
@@ -279,6 +279,29 @@ async asyncData({ app, params }) {
     }
 },
 ```
+
+### A note on page fetching
+
+`Nuxt` has smart page fetching built in, where it will prefetch any linked page that is in the viewport, as long as the user isn't on a 2G connection. This means it will be preloaded before the user clicks on a link to save load time.
+
+This clearly has the possible overhead disadvantage of loading lots of routed pages up front that may never be clicked, and can be turned on by adding `no-prefetch` as an option to `NuxtLink`. 
+
+To turn off prefetching globally, this can be done in the `nuxt.config`, and then add a `prefetch` option to any links you wish to ignore this.
+
+```html
+<NuxtLink to="/about" prefetch>About page prefetched</NuxtLink>
+```
+
+```javascript
+export default {
+  router: {
+    prefetchLinks: false
+  }
+}
+```
+
+
+
 
 
 
