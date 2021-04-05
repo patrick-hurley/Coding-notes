@@ -1,0 +1,1 @@
+convert image-without-box-shadow.png \( +clone -background black -shadow 80x20+0+15 \) +swap -background transparent -layers merge +repage image-with-box-shadow.png

@@ -262,11 +262,11 @@ apollo: {
 },
 ```
 ## Almost!
-**Although the theory is correct, unfortunately option 2 this doesn't appear to work with apollo.**
+**Although the theory is correct, unfortunately option 2 doesn't appear to work with apollo smart queries yet.**
 
 When testing on Netlify, the `graphql` api will still be called on every page load of article, even though the articles have been statically generated. As soon as you turn off the Strapi server, the page content won't load unless the page is refreshed.
 
-To get round this, after trawling forums it looks like that `asyncData` needs to be used instead of the `apollo` method.
+This is a [known issue](https://github.com/nuxt-community/apollo-module/issues/339), and it looks like that `asyncData` needs to be used instead of the `apollo` method for now.
 
 ```javascript
 async asyncData({ app, params }) {
@@ -306,9 +306,14 @@ export default {
 
 ## Deploying to Netflify
 
-Coming soon.
+1. Commit the frontend source to Github.
+2. Select the 'New Site from Git' option from Netlify.
+3. Choose the 'Continuous deployment' option for Github.
+4. The build command is `npm run generate` as we're using `target:static`
 
+![netlify build settings](images/netlify-build-settings.png)
 
+5. Under **Advanced build settings** we need to set the URL of the `graphql` API endpoint, which will be explained in the next section.
 
 
 
