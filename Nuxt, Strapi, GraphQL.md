@@ -1,5 +1,11 @@
 # Nuxt, Strapi, GraphQL
 
+> **Versions**
+> Nuxt: 2.15.3
+> Nuxtjs/apollo: 4.0.1-rc.5
+> Graphql: 15.5.0
+> Strapi: 3.5.4
+
 ## Setup
 
 **frontend**
@@ -7,8 +13,6 @@
 
 **backend**
 `npx create-strapi-app api`
-
----
 
 ## Defining content in Strapi
 
