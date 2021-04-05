@@ -219,13 +219,66 @@ export default {
 
 For the site to be statically generated using `Nuxt` we need to up `nuxt.config.js` with `target:static`.
 
-The problem with the code above is that `nuxt generate` will return `null` for the `$route` object, and  will therefore throw an error when trying to generate the articles.
+The problem with the code above is that `nuxt generate` will return `null` for the `$route.query` object, and  will therefore throw an error when trying to generate the articles.
 
-There are two options;
+**There are two options**;
 
 * Exclude the article pages using `generate.exclude` in the config file, and setting `generate.fallback` to true. This will exclude the articles from being statically generated, and fallback to an SPA when on the article pages, calling the `graphql` endpoint on each page request.
 
+```javascript
+generate: {
+    fallback: true,
+    exclude: [
+        /^\/article/, // path starts with /article
+    ],
+},
+```
+
 * Refactor the code so that instead of a query string, we use a `param` for the article id, making the path `my-article-title/[article-id]`. This method will statically generate each of the article pages.
+
+```javascript
+// index.vue
+<NuxtLink
+    :to="{
+        path: 'article/' + article.slug + '/' + article.id,
+    }"
+    >{{ article.title }}
+</NuxtLink>
+```
+```javascript
+// article.vue
+apollo: {
+    article: {
+        prefetch: true,
+        query: singleArticleQuery,
+        variables() {
+            return {
+                id: this.$route.params.slug,
+            }
+        },
+    },
+},
+```
+## Almost!
+**Although the theory is correct, unfortunately option 2 this doesn't appear to work with apollo.**
+
+When testing on Netlify, the `graphql` api will still be called on every page load of article, even though the articles have been statically generated. As soon as you turn off the Strapi server, the pages won't work.
+
+To get round this, it appears that using `asyncData` needs to be used instead of the apollo method.
+
+```javascript
+async asyncData({ app, params }) {
+    const { data } = await app.apolloProvider.defaultClient.query({
+        query: singleArticleQuery,
+        variables: {
+            id: params.slug,
+        },
+    })
+    return {
+        article: data.article,
+    }
+},
+```
 
 
 
