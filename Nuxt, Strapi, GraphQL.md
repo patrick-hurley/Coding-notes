@@ -214,16 +214,18 @@ export default {
     },
 }
 ```
-
+--- 
 ## Static site generation
 
 For the site to be statically generated using `Nuxt` we need to up `nuxt.config.js` with `target:static`.
 
-The problem with the code above is that `nuxt generate` will return `null` for the `$route.query` object, and  will therefore throw an error when trying to generate the articles.
+The problem with the code above is that `nuxt generate` will return `null` for the `$route.query` object, by design, and will therefore throw an error when trying to generate the articles.
 
 **There are two options**;
 
 * Exclude the article pages using `generate.exclude` in the config file, and setting `generate.fallback` to true. This will exclude the articles from being statically generated, and fallback to an SPA when on the article pages, calling the `graphql` endpoint on each page request.
+
+> This won't be a fully static site though, so will always require a server to be running to grab that data from our database via an API. 
 
 ```javascript
 generate: {
@@ -262,9 +264,9 @@ apollo: {
 ## Almost!
 **Although the theory is correct, unfortunately option 2 this doesn't appear to work with apollo.**
 
-When testing on Netlify, the `graphql` api will still be called on every page load of article, even though the articles have been statically generated. As soon as you turn off the Strapi server, the page content won't load.
+When testing on Netlify, the `graphql` api will still be called on every page load of article, even though the articles have been statically generated. As soon as you turn off the Strapi server, the page content won't load unless the page is refreshed.
 
-To get round this, it appears that using `asyncData` needs to be used instead of the apollo method.
+To get round this, after trawling forums it looks like that `asyncData` needs to be used instead of the `apollo` method.
 
 ```javascript
 async asyncData({ app, params }) {
@@ -280,7 +282,9 @@ async asyncData({ app, params }) {
 },
 ```
 
-### A note on page fetching
+> This will now statically generate our entire site when deployed, so the database server is only needed during this initial generation.
+---
+## A note on page fetching
 
 `Nuxt` has smart page fetching built in, where it will prefetch any linked page that is in the viewport, as long as the user isn't on a 2G connection. This means it will be preloaded before the user clicks on a link to save load time.
 
@@ -300,6 +304,9 @@ export default {
 }
 ```
 
+## Deploying to Netflify
+
+Coming soon.
 
 
 
