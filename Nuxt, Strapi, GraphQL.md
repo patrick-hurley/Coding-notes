@@ -319,6 +319,42 @@ export default {
 
 5. Under **Advanced build settings** we need to set the URL of the `graphql` API endpoint, which will be explained in the next section.
 
+## Ngrok
+
+For Netlify to access the data on Strapi (SQLite at the moment), it needs to be able to access the server from a public URL. We only have our API on localhost at the moment, but using **ngrok** we can create a tunnel so it can be accessed by the internet.
+
+```ssh
+ngrok http 1337
+```
+
+This will provide a URL via terminal that can be used for the environment variable needed above.
+
+In our API config we have defined a variable called `BACKEND_URL`, so add this to either Netlify or Vercel along with the `ngrok` URL.
+
+
+## Strapi webhooks
+
+So that new static content is generated on Netlify when we add or change content on Stapi, we need to create a `webhook` on the Stapi backend.
+
+1. Go to *Settings* in Strapi.
+2. *Global settings* &rarr; *Web hooks*
+3. *Add new Webhook*
+4. Back in Netlify, go to *Build & Deploy* &rarr; *Build hooks*
+5. Add a build hook with a chosen name, and you're returned with a URL
+6. Back in Stapi, paste this into 'Url'
+7. Select every trigger event from the table, and save.
+
+The process is similar in Vercel, just add the Strapi URL as a new *Deploy hooks* instead.
+
+## Progress
+
+The static website will be regenerated when two actions occur;
+* A push to `main` on Github
+* An update to the published content on Strapi
+
+If I'm the only one making update to the content on Strapi then we could stop here and just use **ngrok** to update the site using localhost. More likely we'll want to host Strapi on a server, so let's add it to Heroku for free. As the site is being statically generated at build time, as long as we're willing to wait for Heroku to wake up while we're logging into Strapi, the free plan is suitable.
+
+
 
 
 
