@@ -1,4 +1,4 @@
-# Nuxt, Strapi, GraphQL, SQLite
+# Nuxt, Strapi, GraphQL, Netlify
 
 > **Versions** <br>
 > Nuxt: 2.15.3 <br>

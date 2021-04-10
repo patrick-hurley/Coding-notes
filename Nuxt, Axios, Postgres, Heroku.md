@@ -1,7 +1,8 @@
-# Nuxt, Strapi, Postgres, REST
+# Nuxt, Axios, Postgres, Heroku
 
 > **Versions** <br>
 > Nuxt: 2.15.3 <br>
+> @nuxt/axios: 5.13.1 <br>
 > Strapi: 3.5.4
 
 ## Setup
@@ -33,7 +34,6 @@ publicRuntimeConfig: {
 }
 ```
 
-
 To use Nuxt static generation with `axios`, this only appears to work when the `axios` call is in an `asyncData` method, and not in `mounted()`
 
 ```javascript
@@ -55,3 +55,7 @@ export default {
     },
 }
 ```
+
+## Host Strapi on Heroku
+
+Coming soon.
