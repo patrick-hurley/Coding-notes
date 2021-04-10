@@ -355,6 +355,34 @@ The static website will be regenerated when two actions occur;
 
 If I'm the only one making update to the content on Strapi then we could stop here and just use **ngrok** to update the site using localhost. More likely we'll want to host Strapi on a server, so let's add it to Heroku for free. As the site is being statically generated at build time, as long as we're willing to wait for Heroku to wake up while we're logging into Strapi, the free plan is suitable.
 
+### actually...
+
+I've covered Heroku deployment and Postgres in [these notes](https://www.google.com) instead, as we need a non disk storage database (ie, not SQLite).
+
+This project could be changed to use Postres by updating `config/database.js` and then export/import the data manually from SQLite.
+
+```javascript
+// database.js
+module.exports = ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'bookshelf',
+      settings: {
+        client: 'postgres',
+        host: env('DATABASE_HOST', '127.0.0.1'),
+        port: env.int('DATABASE_PORT', 5432),
+        database: env('DATABASE_NAME', 'nspr'),
+        username: env('DATABASE_USERNAME', 'nspr-admin'),
+        password: env('DATABASE_PASSWORD', 'Japan1156!'),
+        ssl: env.bool('DATABASE_SSL', false),
+      },
+      options: {}
+    },
+  },
+});
+```
+
 
 
 
