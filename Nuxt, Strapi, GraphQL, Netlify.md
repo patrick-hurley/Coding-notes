@@ -357,7 +357,7 @@ If I'm the only one making update to the content on Strapi then we could stop he
 
 ### actually...
 
-I've covered Heroku deployment and Postgres in [these notes](https://www.google.com) instead, as we need a non disk storage database (ie, not SQLite).
+I've covered Heroku deployment and Postgres in [these notes](./Nuxt%2C%20Axios%2C%20Postgres%2C%20Heroku.md) instead, as we need a non disk storage database (ie, not SQLite).
 
 This project could be changed to use Postres by updating `config/database.js` and then export/import the data manually from SQLite.
 
