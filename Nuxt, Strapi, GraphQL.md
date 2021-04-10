@@ -10,6 +10,7 @@
 
 **frontend**
 `npx create-nuxt-app frontend`
+`npm install --save-dev sass sass-loader@10 fibers`
 
 **backend**
 `npx create-strapi-app api`
