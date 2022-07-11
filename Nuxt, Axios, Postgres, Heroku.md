@@ -82,7 +82,7 @@ npm install pg-connection-string --save
     ```javascript
     const parse = require('pg-connection-string').parse;
     const config = parse(process.env.DATABASE_URL);
-
+    
     module.exports = ({ env }) => ({
         defaultConnection: 'default',
         connections: {
